@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+
+	<body>
+		<div id="app">
+			<p>
+				<button @click="onAddNum">+</button>
+				<button @click="onSubtractNum">-</button>
+			</p>
+			<p>{{num}}</p>
+		</div>
+	</body>
+	<script src="https://unpkg.com/vue/dist/vue.js"></script>
+	<script src="https://unpkg.com/vuex@3.1.1"></script>
+	<script type="text/javascript">
+		// 创建一个 仓库(store) 对象实例
+		const store = new Vuex.Store({
+			// 状态(state) 对象
+			state: {
+				count: 0
+			},
+			// 更改或改变(mutations) 对象，mutations对象类似于事件注册。
+			mutations: {
+				// 自定义 事件increment，当触发 事件increment 时，就会自动执行回调函数 increment()
+				increment: state => state.count++,
+				// 自定义 事件decrement
+				decrement: state => state.count--
+			}
+		});
+
+		// 创建一个 vue 对象实例
+		let vm = new Vue({
+			el: '#app',
+			// 把 store 对象提供给 “store” 选项，这可以把 store 的实例注入所有的子组件
+			store,
+			methods: {
+				onAddNum() {
+					// 更改 Vuex 的 store 中的状态(state)的唯一方法是提交 mutation。
+					// 触发 increment事件
+					this.$store.commit('increment')
+				},
+				onSubtractNum() {
+					// 更改 Vuex 的 store 中的状态(state)的唯一方法是提交 mutation。
+					// 触发 decrement事件
+					this.$store.commit('decrement')
+				}
+			},
+			computed: {
+				num: function() {
+					return this.$store.state.count
+				}
+			}
+		});
+	</script>
+
+</html>
